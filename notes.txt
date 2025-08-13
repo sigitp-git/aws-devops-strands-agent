@@ -124,3 +124,6 @@ Performance issues resolved with:
 - Added comprehensive .gitignore file for Python/AWS projects
 - Removed outdated references and corrected tool counts and capabilities
 - Enhanced troubleshooting section with current guidance
+
+## Troubleshooting MCP servers
+Kiro: why my agent can't use the MCP servers at all
