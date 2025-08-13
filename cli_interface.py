@@ -92,7 +92,7 @@ def display_tools_info(tools_count: int, mcp_tool_info: List[Dict[str, Any]]):
     print("🎯 Example: 'Use AWS Documentation to find S3 pricing' or 'List my EKS clusters'")
 
 
-def handle_user_input(user_input: str, agent, tools_count: int, mcp_tool_info: List[Dict[str, Any]]) -> bool:
+def handle_user_input(user_input: str, agent: 'Agent', tools_count: int, mcp_tool_info: List[Dict[str, Any]]) -> bool:
     """
     Handle user input and return whether to continue the loop.
     
@@ -119,7 +119,11 @@ def handle_user_input(user_input: str, agent, tools_count: int, mcp_tool_info: L
         with TimeoutHandler(AGENT_TIMEOUT_SECONDS, "Agent response timeout"):
             print(PROCESSING_MESSAGE)
             response = agent(user_input)
-            print(f"\nAWS-DevOps-bot > {response}")
+            # Handle AgentResult object properly
+            if hasattr(response, 'content'):
+                print(f"\nAWS-DevOps-bot > {response.content}")
+            else:
+                print(f"\nAWS-DevOps-bot > {response}")
     except TimeoutError:
         print(f"\nAWS-DevOps-bot > I apologize, but that request took too long to process. "
               f"Let me provide a quick response based on my knowledge instead.")
@@ -131,8 +135,15 @@ def handle_user_input(user_input: str, agent, tools_count: int, mcp_tool_info: L
     return True
 
 
-def run_interactive_loop(agent, tools_count: int, mcp_tool_info: List[Dict[str, Any]]):
-    """Run the main interactive CLI loop."""
+def run_interactive_loop(agent: 'Agent', tools_count: int, mcp_tool_info: List[Dict[str, Any]]) -> None:
+    """
+    Run the main interactive CLI loop with MCP tools available.
+    
+    Args:
+        agent: The configured agent instance
+        tools_count: Total number of available tools
+        mcp_tool_info: Information about MCP tools for display
+    """
     display_welcome()
     
     while True:
@@ -142,8 +153,14 @@ def run_interactive_loop(agent, tools_count: int, mcp_tool_info: List[Dict[str, 
             break
 
 
-def run_fallback_loop(agent, tools_count: int):
-    """Run CLI loop without MCP tools (fallback mode)."""
+def run_fallback_loop(agent: 'Agent', tools_count: int) -> None:
+    """
+    Run CLI loop without MCP tools (fallback mode).
+    
+    Args:
+        agent: The configured agent instance
+        tools_count: Total number of available tools (should be 1 for websearch only)
+    """
     display_welcome()
     
     while True:
@@ -174,7 +191,11 @@ def run_fallback_loop(agent, tools_count: int):
             with TimeoutHandler(AGENT_TIMEOUT_SECONDS, "Agent response timeout"):
                 print(PROCESSING_MESSAGE)
                 response = agent(user_input)
-                print(f"\nAWS-DevOps-bot > {response}")
+                # Handle AgentResult object properly
+                if hasattr(response, 'content'):
+                    print(f"\nAWS-DevOps-bot > {response.content}")
+                else:
+                    print(f"\nAWS-DevOps-bot > {response}")
         except TimeoutError:
             print(f"\nAWS-DevOps-bot > I apologize, but that request took too long to process. "
                   f"Let me provide a quick response based on my knowledge instead.")

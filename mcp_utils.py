@@ -8,6 +8,10 @@ from typing import List, Dict, Any, Optional
 from mcp import stdio_client, StdioServerParameters
 from strands.tools.mcp import MCPClient
 
+# Constants
+DEFAULT_DESCRIPTION_MAX_LENGTH = 100
+DESCRIPTION_TRUNCATE_SUFFIX = "..."
+
 
 def create_mcp_client(command: str, args: List[str], env: Optional[Dict[str, str]] = None) -> MCPClient:
     """
@@ -23,6 +27,8 @@ def create_mcp_client(command: str, args: List[str], env: Optional[Dict[str, str
         
     Raises:
         ConnectionError: If client cannot be created
+        FileNotFoundError: If command is not found
+        PermissionError: If insufficient permissions
     """
     try:
         # Merge environment variables
@@ -33,8 +39,28 @@ def create_mcp_client(command: str, args: List[str], env: Optional[Dict[str, str
         return MCPClient(lambda: stdio_client(
             StdioServerParameters(command=command, args=args, env=server_env)
         ))
+    except FileNotFoundError as e:
+        raise FileNotFoundError(f"Command '{command}' not found. Ensure it's installed and in PATH: {e}")
+    except PermissionError as e:
+        raise PermissionError(f"Permission denied executing '{command}': {e}")
     except Exception as e:
         raise ConnectionError(f"Failed to create MCP client: {e}")
+
+
+def _truncate_description(description: str, max_length: int = DEFAULT_DESCRIPTION_MAX_LENGTH) -> str:
+    """Truncate description to specified length with ellipsis."""
+    if len(description) > max_length:
+        return description[:max_length - len(DESCRIPTION_TRUNCATE_SUFFIX)] + DESCRIPTION_TRUNCATE_SUFFIX
+    return description
+
+
+def _extract_description_from_spec(tool_spec) -> str:
+    """Extract description from tool spec, handling different formats."""
+    if hasattr(tool_spec, 'description'):
+        return tool_spec.description.split('\n')[0].strip()
+    elif isinstance(tool_spec, dict) and 'description' in tool_spec:
+        return tool_spec['description'].split('\n')[0].strip()
+    return 'No description available'
 
 
 def get_tool_info(tool) -> Dict[str, str]:
@@ -52,16 +78,8 @@ def get_tool_info(tool) -> Dict[str, str]:
     
     # Try to get description from tool_spec
     if hasattr(tool, 'tool_spec') and tool.tool_spec:
-        if hasattr(tool.tool_spec, 'description'):
-            full_desc = tool.tool_spec.description
-            tool_desc = full_desc.split('\n')[0].strip()
-            if len(tool_desc) > 100:
-                tool_desc = tool_desc[:97] + "..."
-        elif isinstance(tool.tool_spec, dict) and 'description' in tool.tool_spec:
-            full_desc = tool.tool_spec['description']
-            tool_desc = full_desc.split('\n')[0].strip()
-            if len(tool_desc) > 100:
-                tool_desc = tool_desc[:97] + "..."
+        full_desc = _extract_description_from_spec(tool.tool_spec)
+        tool_desc = _truncate_description(full_desc)
     
     return {
         'name': tool_name,

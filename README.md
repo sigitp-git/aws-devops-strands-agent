@@ -163,6 +163,67 @@ You > exit
 Happy DevOpsing!
 ```
 
+## Testing
+
+The project includes comprehensive test scripts in the `tests/` directory:
+
+### Run All Tests
+```bash
+# Test MCP server connectivity
+python3 tests/test_mcp_usage.py
+
+# Test basic agent functionality  
+python3 tests/simple_mcp_test.py
+```
+
+### Test Specific MCP Servers
+```bash
+# Test individual servers
+python3 tests/test_mcp_usage.py "AWS Documentation"
+python3 tests/test_mcp_usage.py "AWS Knowledge"
+python3 tests/test_mcp_usage.py "AWS EKS"
+```
+
+### Test Output Example
+```
+✅ AWS Documentation: Found 3 tools
+  1. read_documentation
+  2. search_documentation  
+  3. recommend
+
+✅ AWS EKS: Found 14 tools
+  1. get_cloudwatch_logs
+  2. get_cloudwatch_metrics
+  3. search_eks_troubleshoot_guide
+  [... and 11 more tools]
+```
+
+See `tests/README.md` for detailed testing documentation.
+
+## Code Quality & Architecture
+
+This project has been enhanced with significant code quality improvements:
+
+### ✅ **Architectural Improvements**
+- **Separation of Concerns**: Modular design with dedicated components
+- **MCPManager**: Centralized MCP client lifecycle management
+- **Custom Exceptions**: Specific error types for better debugging
+- **Structured Logging**: Comprehensive logging with configurable levels
+- **Resource Management**: Proper cleanup and graceful shutdown
+
+### ✅ **Enhanced Error Handling**
+- **Custom Exception Hierarchy**: `MCPConnectionError`, `MCPToolLoadError`, `AgentTimeoutError`, `ConfigurationError`
+- **Graceful Degradation**: Application continues with reduced functionality when possible
+- **Informative Messages**: Context-aware error messages for better debugging
+
+### ✅ **Developer Experience**
+- **Type Hints**: Full type annotations for better IDE support
+- **Documentation**: Comprehensive docstrings with Args/Returns
+- **Configuration Validation**: Early detection of configuration issues
+- **Testing Framework**: Organized test structure with utilities
+
+See `IMPROVEMENTS.md` for detailed technical documentation of all enhancements.
+
 ## Performance & Efficiency
 
 The agent is optimized for fast, efficient responses with the following approach:
@@ -447,11 +508,23 @@ model = BedrockModel(
 
 ```
 aws-devops-strands-agent/
-├── agent.py              # Main agent application with triple MCP integration
+├── agent.py              # Main application orchestration with improved architecture
+├── mcp_manager.py        # MCP client lifecycle management
+├── cli_interface.py      # Interactive CLI interface with enhanced error handling
+├── config.py             # Configuration constants with validation
+├── mcp_utils.py          # MCP server utilities and configurations
+├── websearch_tool.py     # Web search tool with DuckDuckGo integration
+├── exceptions.py         # Custom exception hierarchy for better error handling
+├── logger.py            # Centralized logging configuration
 ├── requirements.txt      # Python dependencies
 ├── model_temperature.md  # Temperature configuration guide
+├── IMPROVEMENTS.md       # Code quality improvements documentation
 ├── notes.txt            # Development notes
 ├── .gitignore           # Git ignore file for Python/AWS projects
+├── tests/               # Test scripts and utilities
+│   ├── README.md        # Testing documentation
+│   ├── test_mcp_usage.py # MCP server connectivity tests
+│   └── simple_mcp_test.py # Basic functionality tests
 ├── .kiro/               # Kiro IDE configuration
 │   └── steering/        # AI assistant steering rules
 │       ├── structure.md # Project structure guidelines
