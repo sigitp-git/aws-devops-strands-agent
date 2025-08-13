@@ -1,0 +1,17 @@
+{
+  "enabled": true,
+  "name": "Python Documentation Sync",
+  "description": "Listens to Python source files and requirements.txt changes to automatically update README.md and other documentation files",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "*.py",
+      "requirements.txt"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "The Python source files or requirements have been modified. Please review the changes and update the README.md file and any other relevant documentation to reflect the current state of the codebase. Ensure that installation instructions, usage examples, and feature descriptions are accurate and up-to-date."
+  }
+}
