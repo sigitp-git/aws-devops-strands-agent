@@ -274,12 +274,6 @@ Thumbs.db
 *.backup
 *.old
 
-# Test files
-test_*.py
-*_test.py
-test/
-tests/
-
 # Documentation builds
 docs/build/
 
