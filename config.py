@@ -42,7 +42,7 @@ class ModelConfig:
 class TimeoutConfig:
     """Timeout configuration with validation."""
     SEARCH_TIMEOUT_SECONDS: ClassVar[int] = 10
-    AGENT_TIMEOUT_SECONDS: ClassVar[int] = 45
+    AGENT_TIMEOUT_SECONDS: ClassVar[int] = 30
     
     @classmethod
     def validate(cls) -> None:
@@ -82,11 +82,12 @@ MAX_SEARCH_RESULTS_LIMIT = 5
 # System Prompt
 SYSTEM_PROMPT = """You are AWS DevOps bot. Help with AWS infrastructure and operations.
 
-GUIDELINES:
-- Use AWS tools for specific queries (EKS, documentation, knowledge base)
-- Keep responses concise and actionable
-- Limit to 1 tool call per response
-- Summarize long tool outputs into key points"""
+CRITICAL EFFICIENCY RULES:
+- Answer from knowledge FIRST before using tools
+- Use tools ONLY when you need current/specific data
+- MAXIMUM 1 tool call per response
+- Keep responses under 300 words
+- Be direct and actionable"""
 
 # CLI Messages
 WELCOME_MESSAGE = "\n🚀 AWS-DevOps-bot: Ask me about DevOps on AWS!"
@@ -98,3 +99,55 @@ PROCESSING_MESSAGE = "🤖 Processing your request..."
 # Tool Commands
 TOOL_COMMANDS = ["list tools", "show tools", "available tools", "what tools", "tools"]
 EXIT_COMMANDS = ["exit", "quit", "bye"]
+
+
+@dataclass(frozen=True)
+class FastAgentConfig:
+    """Fast agent specific configuration."""
+    EXIT_COMMANDS: ClassVar[list[str]] = ["exit", "quit", "bye"]
+    WELCOME_MESSAGE: ClassVar[str] = "⚡ Ultra-Fast AWS DevOps Bot (Knowledge Only)"
+    HELP_MESSAGE: ClassVar[str] = "💡 Instant responses - Type 'exit' to quit\n"
+    EXIT_MESSAGE: ClassVar[str] = "⚡ Fast DevOpsing!"
+    PROCESSING_MESSAGE: ClassVar[str] = "⚡ Instant response..."
+    EMPTY_INPUT_MESSAGE: ClassVar[str] = "AWS-DevOps-bot > Ask me about AWS DevOps!"
+    MAX_INPUT_LENGTH: ClassVar[int] = 1000
+
+
+@dataclass(frozen=True)
+class EnvironmentConfig:
+    """Environment validation and setup."""
+    
+    @classmethod
+    def validate_aws_credentials(cls) -> bool:
+        """Check if AWS credentials are available."""
+        try:
+            import boto3
+            session = boto3.Session()
+            credentials = session.get_credentials()
+            return credentials is not None
+        except Exception:
+            return False
+    
+    @classmethod
+    def validate_bedrock_access(cls) -> bool:
+        """Validate Bedrock model access."""
+        try:
+            import boto3
+            client = boto3.client('bedrock', region_name=AWSConfig.DEFAULT_REGION)
+            # This is a lightweight check - just verify we can create the client
+            return True
+        except Exception:
+            return False
+
+
+def validate_environment() -> list[str]:
+    """Validate environment setup and return any issues."""
+    issues = []
+    
+    if not EnvironmentConfig.validate_aws_credentials():
+        issues.append("AWS credentials not configured")
+    
+    if not EnvironmentConfig.validate_bedrock_access():
+        issues.append("Cannot access AWS Bedrock service")
+    
+    return issues

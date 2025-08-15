@@ -171,3 +171,49 @@ The improvements are backward compatible. Existing functionality remains unchang
 ## Conclusion
 
 These improvements significantly enhance the codebase quality while maintaining all existing functionality. The code is now more maintainable, testable, and production-ready.
+
+
+---
+
+🚀 Solutions for Slow Agent Response:
+1. ⚡ Use the Ultra-Fast Agent (Instant Responses)
+python3 fast_agent.py
+No external tools - knowledge only
+Instant responses - no network delays
+Perfect for common AWS questions
+2. 🔧 Optimized Main Agent
+The main agent is now optimized with:
+
+Knowledge-first approach - answers from built-in knowledge before using tools
+Reduced timeout - 30 seconds instead of 45
+Efficiency rules - maximum 1 tool call per response
+3. 📊 Performance Comparison:
+| Agent Type | Response Time | Tools Available | Best For | |------------|---------------|-----------------|----------| | fast_agent.py | Instant | None | Common AWS questions | | agent.py | 5-15 seconds | 21 tools | Specific/current data |
+
+4. 🎯 When to Use Each:
+Use Fast Agent For:
+
+General AWS service explanations
+Best practices questions
+Architecture concepts
+Quick definitions
+Use Main Agent For:
+
+Current AWS documentation
+EKS cluster operations
+Specific troubleshooting guides
+Real-time data queries
+5. 🔍 Why Your Original Query Was Slow:
+Looking at your logs:
+
+Tool #1: aws___search_documentation
+[Multiple HTTP requests to knowledge-mcp.global.api.aws]
+The agent was:
+
+Making MCP tool calls instead of using knowledge
+Processing large AWS documentation (50KB+ responses)
+Multiple network requests adding 5-10 seconds total
+6. 💡 Quick Fix for Main Agent:
+The optimized system prompt now prioritizes knowledge-first responses, so it should be much faster for common questions like "what is amazon eks".
+
+Try the main agent again - it should now respond from knowledge without using tools for basic questions!
