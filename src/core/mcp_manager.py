@@ -5,7 +5,7 @@ MCP Manager for handling MCP client lifecycle and tool loading.
 
 from contextlib import ExitStack
 from typing import List, Dict, Any, Tuple
-from mcp_utils import MCP_SERVERS, create_mcp_client, get_tool_info
+from utils.mcp_utils import MCP_SERVERS, create_mcp_client, get_tool_info
 
 
 class MCPManager:

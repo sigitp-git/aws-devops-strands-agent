@@ -6,10 +6,10 @@ from strands.agent import Agent
 from strands.models.bedrock import BedrockModel
 
 # Import local modules
-from config import MODEL_ID, MODEL_TEMPERATURE, SYSTEM_PROMPT
-from websearch_tool import websearch
-from mcp_manager import MCPManager
-from cli_interface import run_interactive_loop, run_fallback_loop
+from config.config import MODEL_ID, MODEL_TEMPERATURE, SYSTEM_PROMPT
+from tools.websearch_tool import websearch
+from core.mcp_manager import MCPManager
+from interfaces.cli_interface import run_interactive_loop, run_fallback_loop
 
 # Configure logging
 logging.getLogger("strands").setLevel(logging.INFO)
@@ -43,7 +43,7 @@ def main():
     """Main application entry point with proper resource management."""
     import signal
     import sys
-    from logger import app_logger
+    from core.logger import app_logger
     
     def signal_handler(signum, frame):
         """Handle graceful shutdown on SIGINT/SIGTERM."""

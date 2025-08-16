@@ -9,7 +9,7 @@ from typing import Optional
 
 from strands.agent import Agent
 from strands.models.bedrock import BedrockModel
-from config import MODEL_ID, MODEL_TEMPERATURE
+from config.config import MODEL_ID, MODEL_TEMPERATURE
 
 
 def setup_logging() -> None:

@@ -5,7 +5,7 @@ CLI interface utilities for AWS DevOps agent.
 
 import signal
 from typing import List, Dict, Any
-from config import (
+from config.config import (
     TOOL_COMMANDS, EXIT_COMMANDS, WELCOME_MESSAGE, HELP_MESSAGE,
     EXIT_MESSAGE, EMPTY_INPUT_MESSAGE, PROCESSING_MESSAGE,
     AGENT_TIMEOUT_SECONDS

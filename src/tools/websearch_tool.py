@@ -7,7 +7,7 @@ import signal
 from ddgs import DDGS
 from ddgs.exceptions import DDGSException, RatelimitException
 from strands.tools import tool
-from config import SEARCH_TIMEOUT_SECONDS, DEFAULT_MAX_SEARCH_RESULTS, MAX_SEARCH_RESULTS_LIMIT
+from config.config import SEARCH_TIMEOUT_SECONDS, DEFAULT_MAX_SEARCH_RESULTS, MAX_SEARCH_RESULTS_LIMIT
 
 
 @tool

@@ -7,6 +7,15 @@
 aws bedrock list-foundation-models --region us-east-1 --output json | grep sonnet
 ```
 
+### Running the Agent
+```bash
+# Full-featured agent (recommended)
+python3 main.py
+
+# Ultra-fast knowledge-only agent
+python3 fast.py
+```
+
 ### Testing
 ```bash
 # Test all MCP servers

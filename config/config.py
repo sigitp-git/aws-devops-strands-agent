@@ -6,7 +6,10 @@ Configuration constants for AWS DevOps agent.
 import os
 from dataclasses import dataclass
 from typing import ClassVar
-from exceptions import ConfigurationError
+# Define a simple ConfigurationError here to avoid circular imports
+class ConfigurationError(Exception):
+    """Configuration-related error."""
+    pass
 
 
 @dataclass(frozen=True)

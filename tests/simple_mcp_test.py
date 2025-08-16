@@ -16,8 +16,8 @@ TEST_QUERY = "What is AWS S3?"
 RESPONSE_PREVIEW_LENGTH = 200
 
 try:
-    from config import MODEL_ID, MODEL_TEMPERATURE, SYSTEM_PROMPT
-    from websearch_tool import websearch
+    from config.config import MODEL_ID, MODEL_TEMPERATURE, SYSTEM_PROMPT
+    from src.tools.websearch_tool import websearch
     from strands.agent import Agent
     from strands.models.bedrock import BedrockModel
     from mcp_utils import create_mcp_client

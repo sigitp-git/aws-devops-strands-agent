@@ -4,34 +4,55 @@
 
 ```
 aws-devops-strands-agent/
-├── agent.py              # Main application orchestration (improved architecture)
-├── mcp_manager.py        # MCP client lifecycle management
-├── cli_interface.py      # Interactive CLI interface with enhanced error handling
-├── config.py             # Configuration constants with validation
-├── mcp_utils.py          # MCP server utilities and configurations
-├── websearch_tool.py     # Web search tool with DuckDuckGo integration
-├── exceptions.py         # Custom exception hierarchy for better error handling
-├── logger.py            # Centralized logging configuration
-├── requirements.txt      # Python dependencies
-├── model_temperature.md  # Temperature configuration guide
-├── IMPROVEMENTS.md       # Code quality improvements documentation
-├── notes.txt            # Development notes
-├── .gitignore           # Git ignore file for Python/AWS projects
-├── README.md            # Project documentation
-├── tests/               # Test scripts and utilities
-│   ├── README.md        # Testing documentation
-│   ├── test_mcp_usage.py # MCP server connectivity tests
-│   └── simple_mcp_test.py # Basic functionality tests
-└── .kiro/               # Kiro IDE configuration
-    └── steering/        # AI assistant steering rules
-        ├── structure.md  # Project structure guidelines
-        ├── tech.md       # Technology stack information
-        └── product.md    # Product overview
+├── main.py              # Main entry point - full-featured agent
+├── fast.py              # Fast entry point - knowledge-only agent
+├── requirements.txt     # Python dependencies
+├── README.md           # Project documentation
+├── .gitignore          # Git ignore file
+├── src/                # Source code package
+│   ├── __init__.py
+│   ├── core/           # Core application components
+│   │   ├── __init__.py
+│   │   ├── agent.py           # Main application orchestration
+│   │   ├── fast_agent.py      # Ultra-fast knowledge-only agent
+│   │   ├── mcp_manager.py     # MCP client lifecycle management
+│   │   ├── exceptions.py      # Custom exception hierarchy
+│   │   └── logger.py          # Centralized logging configuration
+│   ├── tools/          # Agent tools and integrations
+│   │   ├── __init__.py
+│   │   └── websearch_tool.py  # Web search tool with DuckDuckGo
+│   ├── utils/          # Utility functions and helpers
+│   │   ├── __init__.py
+│   │   ├── mcp_utils.py       # MCP server utilities
+│   │   └── timeout_utils.py   # Timeout handling utilities
+│   └── interfaces/     # User interfaces and interaction components
+│       ├── __init__.py
+│       └── cli_interface.py   # Interactive CLI interface
+├── config/             # Configuration files
+│   └── config.py       # Configuration constants and settings
+├── docs/               # Documentation and guides
+│   ├── IMPROVEMENTS.md        # Code quality improvements
+│   ├── model_temperature.md   # Temperature configuration guide
+│   ├── notes.txt             # Development notes
+│   └── technical_blog_build_process.md
+├── tests/              # Test scripts and utilities
+│   ├── README.md              # Testing documentation
+│   ├── test_mcp_usage.py      # MCP server connectivity tests
+│   └── simple_mcp_test.py     # Basic functionality tests
+└── .kiro/              # Kiro IDE configuration
+    └── steering/       # AI assistant steering rules
+        ├── structure.md       # Project structure guidelines
+        ├── tech.md           # Technology stack information
+        └── product.md        # Product overview
 ```
 
 ## Key Files
 
-### Core Application
+### Entry Points
+- **main.py**: Main entry point for full-featured agent with all 21 tools
+- **fast.py**: Fast entry point for ultra-fast knowledge-only agent
+
+### Core Application (src/core/)
 - **agent.py**: Main orchestration with improved architecture:
   - Application entry point with signal handling
   - Agent creation and configuration with 21 tools
@@ -49,12 +70,20 @@ aws-devops-strands-agent/
 - **exceptions.py**: Custom exception hierarchy for better error handling
 - **logger.py**: Centralized logging configuration with multiple loggers
 
+### Tools & Utilities (src/tools/, src/utils/)
+- **websearch_tool.py**: Web search tool with DuckDuckGo integration
+- **mcp_utils.py**: MCP server utilities and configurations
+- **timeout_utils.py**: Timeout handling utilities
+
+### Interfaces (src/interfaces/)
+- **cli_interface.py**: Interactive CLI interface with enhanced error handling
+
 ### Configuration & Documentation
-- **config.py**: Configuration constants with validation
+- **config/config.py**: Configuration constants with validation
 - **requirements.txt**: Dependencies (strands-agents, strands-agents-tools, ddgs, mcp)
-- **model_temperature.md**: Detailed temperature tuning guide
-- **IMPROVEMENTS.md**: Comprehensive code quality improvements documentation
-- **notes.txt**: Development commands and snippets
+- **docs/model_temperature.md**: Detailed temperature tuning guide
+- **docs/IMPROVEMENTS.md**: Comprehensive code quality improvements documentation
+- **docs/notes.txt**: Development commands and snippets
 
 ### Documentation
 - **README.md**: Comprehensive project documentation with usage examples

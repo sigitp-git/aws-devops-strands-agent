@@ -15,7 +15,7 @@ from typing import Dict, List, Optional
 # Add parent directory to path for imports
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
-from mcp_utils import test_mcp_server, MCP_SERVERS
+from src.utils.mcp_utils import test_mcp_server, MCP_SERVERS
 
 # Set AWS region
 os.environ['AWS_DEFAULT_REGION'] = 'us-east-1'
