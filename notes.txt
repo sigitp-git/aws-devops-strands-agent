@@ -41,13 +41,14 @@ python3 agent.py
 - **config.py**: Configuration with validation
 
 ### Recent Improvements (Latest)
-1. **Separation of Concerns**: Modular design with dedicated components
-2. **Enhanced Error Handling**: Custom exception types with context
-3. **Configuration Validation**: Early detection of configuration issues
-4. **Type Hints & Documentation**: Full type annotations and comprehensive docstrings
-5. **Structured Logging**: Multiple loggers with configurable levels
-6. **Resource Management**: Proper cleanup and graceful shutdown
-7. **Performance Framework**: Structure for lazy loading and optimization
+1. **Enhanced Customer Experience**: Added NON-FUNCTIONAL RULES for friendly, helpful interactions
+2. **Separation of Concerns**: Modular design with dedicated components
+3. **Enhanced Error Handling**: Custom exception types with context
+4. **Configuration Validation**: Early detection of configuration issues
+5. **Type Hints & Documentation**: Full type annotations and comprehensive docstrings
+6. **Structured Logging**: Multiple loggers with configurable levels
+7. **Resource Management**: Proper cleanup and graceful shutdown
+8. **Performance Framework**: Structure for lazy loading and optimization
 
 ## Troubleshooting History
 
@@ -72,10 +73,11 @@ python3 agent.py
 ## Performance Optimizations
 
 ### System Prompt Efficiency
-- Optimized for AWS DevOps domain with efficiency guidelines
+- Optimized for AWS DevOps domain with efficiency guidelines and customer service standards
 - Knowledge-first approach (built-in knowledge before external tools)
 - Limited to 1 tool call per response for speed
 - Temperature: 0.3 for technical accuracy
+- NON-FUNCTIONAL RULES: Friendly, patient, helpful interactions with proactive assistance
 
 ### Timeout Protection
 - Web search: 10-second timeout

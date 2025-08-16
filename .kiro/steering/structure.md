@@ -68,13 +68,14 @@ aws-devops-strands-agent/
 - Exception handling for external API calls (DuckDuckGo)
 
 ### Agent Configuration
-- System prompts optimized for AWS DevOps domain with efficiency guidelines
+- System prompts optimized for AWS DevOps domain with efficiency guidelines and customer service standards
 - Temperature setting of 0.3 for technical accuracy with validation
 - Tools list combines websearch and triple MCP server tools (21 total tools)
 - MCP tools managed by MCPManager with proper lifecycle handling
 - Tool information stored for enhanced discovery and categorization
 - Knowledge-first approach with minimal tool calls (max 1 per response)
 - Enhanced error handling with custom exception types
+- Customer-focused behavioral rules for friendly, helpful interactions
 
 ### Error Handling
 - Custom exception hierarchy for specific error types

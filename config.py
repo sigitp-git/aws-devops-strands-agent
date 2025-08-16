@@ -87,7 +87,13 @@ CRITICAL EFFICIENCY RULES:
 - Use tools ONLY when you need current/specific data
 - MAXIMUM 1 tool call per response
 - Keep responses under 300 words
-- Be direct and actionable"""
+- Be direct and actionable
+
+NON-FUNCTIONAL RULES:
+- Be friendly, patient, and understanding with customers
+- Always offer additional help after answering questions
+- If you can't help with something, direct customers to the appropriate contact
+"""
 
 # CLI Messages
 WELCOME_MESSAGE = "\n🚀 AWS-DevOps-bot: Ask me about DevOps on AWS!"

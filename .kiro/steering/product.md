@@ -10,13 +10,14 @@ An intelligent AWS DevOps assistant bot built with the Strands Agents framework,
 - Real-time web search integration for up-to-date information
 
 ### Key Features
-- **AI-Powered**: Claude Sonnet 4 via AWS Bedrock with efficiency-optimized prompts
+- **AI-Powered**: Claude Sonnet 4 via AWS Bedrock with efficiency-optimized prompts and customer service standards
 - **Dual Performance Modes**: Ultra-fast knowledge-only agent + comprehensive MCP integration
 - **Enhanced Web Search**: DuckDuckGo integration with timeout protection and smart result limiting
 - **Triple MCP Integration**: Direct access to AWS Documentation, Knowledge Base, and EKS clusters
 - **Tool Discovery**: Built-in tool categorization and discovery (21 total tools)
 - **AWS Focus**: Specialized in DevOps, CI/CD, IaC, containers, monitoring, EKS management
 - **Performance Optimized**: Instant responses (< 1 second) or comprehensive tool-based queries
+- **Customer-Focused**: Friendly, patient, and helpful interactions with proactive assistance
 - **Enhanced Architecture**: Modular design with separation of concerns and proper error handling
 - **Production Ready**: Structured logging, graceful shutdown, configuration validation
 - **Developer Friendly**: Full type hints, comprehensive documentation, organized testing

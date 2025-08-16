@@ -3,7 +3,25 @@
 ## Overview
 This document outlines the improvements made to the AWS DevOps Strands Agent codebase to enhance maintainability, readability, and performance.
 
-## 1. Ultra-Fast Agent Implementation ✅
+## 1. Enhanced Customer Experience ✅
+
+### Problem
+The agent focused only on technical efficiency without considering customer service quality and user experience.
+
+### Solution
+- **Added NON-FUNCTIONAL RULES**: Customer service standards integrated into system prompts
+- **Friendly Interactions**: Be friendly, patient, and understanding with customers
+- **Proactive Assistance**: Always offer additional help after answering questions
+- **Clear Guidance**: Direct customers to appropriate contacts when unable to help
+- **Consistent Behavior**: Applied across both fast and full-featured agents
+
+### Benefits
+- **Better User Experience**: More welcoming and supportive interactions
+- **Increased Engagement**: Users feel comfortable asking follow-up questions
+- **Professional Service**: Maintains technical accuracy while being approachable
+- **Clear Expectations**: Users know where to get help when needed
+
+## 2. Ultra-Fast Agent Implementation ✅
 
 ### Problem
 Users needed instant responses for common AWS questions without waiting for MCP tool calls and network requests.
@@ -13,14 +31,16 @@ Users needed instant responses for common AWS questions without waiting for MCP 
 - **Enhanced Response Extraction**: Proper handling of AgentResult objects with message.content structure
 - **Clean Output Formatting**: Professional display without raw response objects
 - **Optimized Configuration**: 150-word response limit, 1000-character input limit, 30-second timeout
+- **Customer Service Integration**: Includes NON-FUNCTIONAL RULES for friendly interactions
 
 ### Benefits
 - **Instant Performance**: < 1 second response time for common AWS questions
 - **Clean UX**: Professional formatting without technical artifacts
 - **Reliability**: Enhanced error handling and input validation
 - **Flexibility**: Choice between instant knowledge-based or comprehensive tool-based responses
+- **Consistent Experience**: Same friendly, helpful behavior as full-featured agent
 
-## 2. Separation of Concerns ✅
+## 3. Separation of Concerns ✅
 
 ### Problem
 The main `agent.py` file had too many responsibilities - MCP client setup, tool loading, and application startup.
@@ -36,7 +56,7 @@ The main `agent.py` file had too many responsibilities - MCP client setup, tool 
 - **Testability**: Components can be tested in isolation
 - **Reusability**: MCPManager can be reused in other contexts
 
-## 2. Enhanced Error Handling ✅
+## 4. Enhanced Error Handling ✅
 
 ### Problem
 Generic exception handling made debugging difficult and provided poor user experience.
@@ -51,7 +71,7 @@ Generic exception handling made debugging difficult and provided poor user exper
 - **User Experience**: More informative error messages
 - **Reliability**: Better handling of edge cases
 
-## 3. Configuration Validation ✅
+## 5. Configuration Validation ✅
 
 ### Problem
 No validation of configuration values could lead to runtime errors.
@@ -60,13 +80,15 @@ No validation of configuration values could lead to runtime errors.
 - **Added `validate_configuration()`**: Checks all config values at startup
 - **Type Safety**: Ensures temperature is between 0.0-1.0, timeouts are positive
 - **Early Failure**: Configuration errors are caught at startup, not runtime
+- **System Prompt Enhancement**: Added NON-FUNCTIONAL RULES for customer service standards
 
 ### Benefits
 - **Reliability**: Prevents runtime failures due to invalid configuration
 - **Developer Experience**: Clear error messages for configuration issues
 - **Documentation**: Configuration constraints are explicit in code
+- **Consistent Behavior**: Customer service standards applied across all agents
 
-## 4. Improved Type Hints and Documentation ✅
+## 6. Improved Type Hints and Documentation ✅
 
 ### Problem
 Missing type hints and inconsistent documentation made code harder to understand.
@@ -81,7 +103,7 @@ Missing type hints and inconsistent documentation made code harder to understand
 - **Code Quality**: Type checking catches errors before runtime
 - **Documentation**: Self-documenting code with clear interfaces
 
-## 5. Structured Logging ✅
+## 7. Structured Logging ✅
 
 ### Problem
 Print statements scattered throughout code made debugging difficult.
@@ -97,7 +119,7 @@ Print statements scattered throughout code made debugging difficult.
 - **Production Ready**: Can easily adjust logging for different environments
 - **Monitoring**: Logs can be collected and analyzed
 
-## 6. Resource Management and Cleanup ✅
+## 8. Resource Management and Cleanup ✅
 
 ### Problem
 No explicit cleanup of resources or graceful shutdown handling.
@@ -113,7 +135,7 @@ No explicit cleanup of resources or graceful shutdown handling.
 - **User Experience**: Graceful shutdown messages
 - **Debugging**: All errors are captured and logged
 
-## 7. Performance Optimization Framework ✅
+## 9. Performance Optimization Framework ✅
 
 ### Problem
 All MCP tools loaded at startup, even if not used.

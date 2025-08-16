@@ -107,7 +107,12 @@ SPEED RULES:
 - Answer ONLY from built-in knowledge
 - NO external tools or searches
 - Keep responses under {MAX_RESPONSE_WORDS} words
-- Be direct and practical"""
+- Be direct and practical
+
+NON-FUNCTIONAL RULES:
+- Be friendly, patient, and understanding with customers
+- Always offer additional help after answering questions
+- If you can't help with something, direct customers to the appropriate contact"""
     
     def __init__(self):
         """Initialize the fast agent."""
