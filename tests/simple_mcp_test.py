@@ -20,7 +20,7 @@ try:
     from src.tools.websearch_tool import websearch
     from strands.agent import Agent
     from strands.models.bedrock import BedrockModel
-    from mcp_utils import create_mcp_client
+    from src.utils.mcp_utils import create_mcp_client
 except ImportError as e:
     print(f"❌ Import error: {e}")
     print("Make sure all dependencies are installed and config files exist.")
