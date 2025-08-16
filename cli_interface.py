@@ -127,7 +127,6 @@ def handle_user_input(user_input: str, agent: 'Agent', tools_count: int, mcp_too
     except TimeoutError:
         print(f"\nAWS-DevOps-bot > I apologize, but that request took too long to process. "
               f"Let me provide a quick response based on my knowledge instead.")
-        print("For EKS cluster operations, you can use: `aws eks list-clusters` or check the AWS Console.")
     except Exception as e:
         print(f"\nAWS-DevOps-bot > I encountered an error: {e}. "
               f"Let me help you with general AWS DevOps guidance instead.")
