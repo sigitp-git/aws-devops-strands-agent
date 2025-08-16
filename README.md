@@ -74,11 +74,23 @@ Total: 21 tools when all MCP servers are available.
 
 ## Usage
 
-Run the AWS DevOps bot:
+### **🚀 Full-Featured Agent (Recommended)**
+Run the complete AWS DevOps bot with all 21 tools:
 
 ```bash
 python3 agent.py
 ```
+
+### **⚡ Ultra-Fast Agent (Instant Responses)**
+For instant knowledge-based responses without external tools:
+
+```bash
+python3 fast_agent.py
+```
+
+**Performance Comparison:**
+- **fast_agent.py**: Instant responses (< 1 second) - Perfect for common AWS questions
+- **agent.py**: 5-15 seconds with full MCP integration - Best for specific/current data
 
 The bot will automatically detect available tools and start an interactive session. You'll see:
 - 📋 AWS Documentation loaded X tools
@@ -509,6 +521,7 @@ model = BedrockModel(
 ```
 aws-devops-strands-agent/
 ├── agent.py              # Main application orchestration with improved architecture
+├── fast_agent.py         # Ultra-fast knowledge-only agent (instant responses)
 ├── mcp_manager.py        # MCP client lifecycle management
 ├── cli_interface.py      # Interactive CLI interface with enhanced error handling
 ├── config.py             # Configuration constants with validation

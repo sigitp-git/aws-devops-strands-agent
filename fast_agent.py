@@ -25,29 +25,61 @@ def setup_logging() -> None:
     )
 
 
+def _get_text_from_item(item) -> str:
+    """Extract text from various item types."""
+    if isinstance(item, dict):
+        return item.get('text', str(item))
+    if hasattr(item, 'text'):
+        return str(item.text)
+    return str(item)
+
+
 def extract_response_content(response) -> str:
-    """Extract content from agent response with proper type handling."""
+    """Extract content from agent response with simplified logic."""
+    # Handle AgentResult with message attribute
+    if hasattr(response, 'message') and isinstance(response.message, dict):
+        content = response.message.get('content', [])
+        if isinstance(content, list) and content:
+            return _get_text_from_item(content[0])
+    
+    # Handle direct content attribute
     if hasattr(response, 'content'):
-        return response.content
-    elif hasattr(response, 'text'):
-        return response.text
-    elif hasattr(response, 'message'):
-        return response.message
-    else:
-        return str(response)
+        content = response.content
+        if isinstance(content, list) and content:
+            return _get_text_from_item(content[0])
+        return _get_text_from_item(content)
+    
+    # Handle direct text attributes
+    for attr in ['text', 'message']:
+        if hasattr(response, attr):
+            return str(getattr(response, attr))
+    
+    # Handle dict response
+    if isinstance(response, dict):
+        if 'content' in response:
+            content = response['content']
+            if isinstance(content, list) and content:
+                return _get_text_from_item(content[0])
+            return _get_text_from_item(content)
+        if 'text' in response:
+            return str(response['text'])
+    
+    return str(response)
 
 
-def validate_user_input(user_input: str) -> tuple[bool, Optional[str]]:
-    """Validate user input with length and content checks."""
+def validate_user_input(user_input: str, max_length: int = 1000) -> tuple[bool, Optional[str]]:
+    """Validate user input with comprehensive checks."""
     if not user_input or not user_input.strip():
         return False, "Empty input"
     
-    if len(user_input.strip()) > 1000:  # Reasonable limit
-        return False, "Input too long (max 1000 characters)"
+    cleaned_input = user_input.strip()
     
-    # Check for potentially problematic characters
-    if any(char in user_input for char in ['\x00', '\x01', '\x02']):
-        return False, "Invalid characters in input"
+    if len(cleaned_input) > max_length:
+        return False, f"Input too long (max {max_length} characters)"
+    
+    # Check for control characters (more comprehensive)
+    if any(ord(char) < 32 and char not in '\t\n\r' for char in cleaned_input):
+        return False, "Invalid control characters in input"
     
     return True, None
 
@@ -56,19 +88,25 @@ class FastAgent:
     """Ultra-fast AWS DevOps agent with knowledge-only responses."""
     
     # Configuration constants
+    MAX_RESPONSE_WORDS = 150
+    MAX_INPUT_LENGTH = 1000
+    MAX_ERROR_MESSAGE_LENGTH = 100
+    QUERY_TIMEOUT_SECONDS = 30
     EXIT_COMMANDS = ["exit", "quit", "bye"]
+    
+    # UI Messages
     WELCOME_MESSAGE = "⚡ Ultra-Fast AWS DevOps Bot (Knowledge Only)"
     HELP_MESSAGE = "💡 Instant responses - Type 'exit' to quit\n"
     EXIT_MESSAGE = "⚡ Fast DevOpsing!"
     PROCESSING_MESSAGE = "⚡ Instant response..."
     
     # Speed-optimized system prompt
-    SYSTEM_PROMPT = """You are AWS DevOps bot. Answer AWS questions quickly from your knowledge.
+    SYSTEM_PROMPT = f"""You are AWS DevOps bot. Answer AWS questions quickly from your knowledge.
 
 SPEED RULES:
 - Answer ONLY from built-in knowledge
 - NO external tools or searches
-- Keep responses under 150 words
+- Keep responses under {MAX_RESPONSE_WORDS} words
 - Be direct and practical"""
     
     def __init__(self):
@@ -87,9 +125,15 @@ SPEED RULES:
         try:
             response = self.agent(user_input)
             return extract_response_content(response)
+        except TimeoutError as e:
+            self.logger.error(f"Query timeout: {e}")
+            return "⚡ Response timeout - please try a simpler query"
         except Exception as e:
             self.logger.error(f"Error processing query: {e}")
-            return f"Sorry, I encountered an error: {e}"
+            error_msg = str(e)
+            if len(error_msg) > self.MAX_ERROR_MESSAGE_LENGTH:
+                error_msg = error_msg[:self.MAX_ERROR_MESSAGE_LENGTH] + "..."
+            return f"⚡ Sorry, I encountered an error: {error_msg}"
     
     def run_interactive_loop(self) -> None:
         """Run the interactive command loop."""
@@ -104,7 +148,7 @@ SPEED RULES:
                     print(self.EXIT_MESSAGE)
                     break
                 
-                is_valid, error_msg = validate_user_input(user_input)
+                is_valid, error_msg = validate_user_input(user_input, self.MAX_INPUT_LENGTH)
                 if not is_valid:
                     print(f"AWS-DevOps-bot > {error_msg}")
                     continue

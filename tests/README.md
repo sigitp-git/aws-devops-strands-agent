@@ -31,12 +31,16 @@ python3 tests/simple_mcp_test.py
 From the project root directory:
 
 ```bash
-# Run all tests
+# Test MCP server connectivity
 python3 tests/test_mcp_usage.py
 python3 tests/simple_mcp_test.py
 
-# Test specific functionality
+# Test specific MCP server
 python3 tests/test_mcp_usage.py "AWS EKS"
+
+# Test both agents manually
+python3 agent.py        # Full-featured agent (21 tools)
+python3 fast_agent.py   # Ultra-fast agent (instant responses)
 ```
 
 ## Test Requirements

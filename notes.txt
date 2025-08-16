@@ -25,13 +25,15 @@ python3 agent.py
 ## Architecture Overview
 
 ### ✅ **Current Status: FULLY OPERATIONAL**
-- **21 Total Tools**: 1 websearch + 20 MCP tools
+- **21 Total Tools**: 1 websearch + 20 MCP tools (main agent)
 - **3 MCP Servers**: AWS Documentation, AWS Knowledge, AWS EKS
+- **Ultra-Fast Agent**: Instant knowledge-only responses (fast_agent.py)
 - **Enhanced Architecture**: Modular design with proper error handling
 - **Production Ready**: Structured logging, graceful shutdown, configuration validation
 
 ### Key Components
-- **agent.py**: Main orchestration with improved architecture
+- **agent.py**: Main orchestration with improved architecture (21 tools)
+- **fast_agent.py**: Ultra-fast knowledge-only agent (instant responses)
 - **mcp_manager.py**: MCP client lifecycle management
 - **exceptions.py**: Custom exception hierarchy for better error handling
 - **logger.py**: Centralized logging configuration
@@ -102,7 +104,7 @@ Results: 2/2 tests passed
 
 ## Usage Examples
 
-### Interactive Mode
+### **🚀 Full-Featured Agent**
 ```bash
 python3 agent.py
 # Shows: 🚀 AWS-DevOps-bot: Ask me about DevOps on AWS!
@@ -110,7 +112,22 @@ python3 agent.py
 # Type 'exit' to quit
 ```
 
+### **⚡ Ultra-Fast Agent**
+```bash
+python3 fast_agent.py
+# Shows: ⚡ Ultra-Fast AWS DevOps Bot (Knowledge Only)
+# Instant responses for common AWS questions
+# Type 'exit' to quit
+```
+
 ### Example Queries
+**For fast_agent.py (instant):**
+- "what is aws s3"
+- "explain amazon eks"
+- "aws lambda basics"
+- "dynamodb key concepts"
+
+**For agent.py (comprehensive):**
 - "search aws documentation for lambda pricing"
 - "find eks troubleshooting guide for pod issues"
 - "what are aws well architected framework pillars"
@@ -162,3 +179,8 @@ python3 agent.py
 - **This file**: Current development status and guidelines
 
 The project is now production-ready with comprehensive documentation, testing, and monitoring capabilities.
+
+
+---
+
+echo -e "what is aws s3\nexit" | python3 fast_agent.py

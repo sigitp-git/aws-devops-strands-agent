@@ -34,9 +34,14 @@ aws-devops-strands-agent/
 ### Core Application
 - **agent.py**: Main orchestration with improved architecture:
   - Application entry point with signal handling
-  - Agent creation and configuration
+  - Agent creation and configuration with 21 tools
   - Resource management with proper cleanup
   - Graceful shutdown handling
+- **fast_agent.py**: Ultra-fast knowledge-only agent:
+  - Instant responses (< 1 second) for common AWS questions
+  - Clean response formatting with proper AgentResult handling
+  - Enhanced error handling and input validation
+  - Optimized for speed with 150-word response limit
 - **mcp_manager.py**: MCP client lifecycle management:
   - Centralized MCP client setup and teardown
   - Tool loading with error handling
